@@ -7,14 +7,17 @@ for (let i = 0; i < 18; i++) {
     gameGrid[i].row.push(j)
     let tile = document.createElement('div')
     tile.className = `${i}-${j}`
-    tile.innerText = `X`
+    tile.innerHTML = `${i + 1}-${j + 1}`
     tile.style.backgroundColor = `rgb(${Math.floor(
       Math.random() * 255
     )}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)})`
-    tile.style.width = '40px'
-    tile.style.height = '40px'
+    tile.style.width = `40px`
+    tile.style.height = `40px`
     tile.style.gridArea = `${i + 1} / ${j + 1} / ${i + 2} / ${j + 2}`
     tileCon.append(tile)
+    tile.addEventListener('click', () => {
+      tile.style.backgroundColor = 'red'
+    })
   }
 }
 console.log(gameGrid)

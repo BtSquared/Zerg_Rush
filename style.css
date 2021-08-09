@@ -8,7 +8,7 @@ body {
   align-items: center;
 }
 nav {
-  grid-area: 1/1/2/4;
+  grid-area: 1/2/2/3;
   display: flex;
   justify-content: space-between;
   background-color: seagreen;
@@ -18,7 +18,6 @@ nav {
   width: 1280px;
   height: 720px;
   border: solid 3px black;
-  background-color: rgb(159, 89, 180);
 }
 .top {
   margin: 25px 50px 25px 50px;
@@ -29,9 +28,21 @@ nav {
 }
 .tileCon {
   display: grid;
-  width: 100%;
-  height: 40px;
   text-align: center;
-  justify-content: center;
+  justify-items: center;
   align-items: center;
+  font-size: 14px;
+}
+.base {
+  margin: 0;
+  z-index: 1;
+  grid-area: 10/13/17/23;
+  background-image: url('./CommandCenter_SC1_Game1.png');
+  background-size: contain;
+  width: 100%;
+  height: 100%;
+  color: white;
+  font-size: 100px;
+  text-align: center;
+  border: solid 5px black;
 }

@@ -1,5 +1,5 @@
 # Zerg Rush
-
+![zerg](https://lowko.tv/wp-content/uploads/StarCraft-2-Heart-of-the-Swarm-Zerg-Wallpaper-Background.jpg)
 ## Date: 8/8/2021
 
 ### By: Tanner Mitchell
@@ -25,4 +25,4 @@ this is a Javascript base defence game in which you cick the enemys to stall you
 
 
 ***Credits***
-
+- Header Image property of Activison Blizzard

@@ -15,11 +15,23 @@ nav {
 }
 .gameContainer {
   grid-area: 2/2/3/3;
-  background-color: red;
   width: 1280px;
   height: 720px;
   border: solid 3px black;
+  background-color: rgb(159, 89, 180);
 }
 .top {
   margin: 25px 50px 25px 50px;
+}
+.gameGrid {
+  display: grid;
+  grid-template-areas: repeat(32, 1fr)/ repeat(18, 1fr);
+}
+.tileCon {
+  display: grid;
+  width: 100%;
+  height: 40px;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
 }

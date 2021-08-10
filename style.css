@@ -32,6 +32,7 @@ nav {
   justify-items: center;
   align-items: center;
   font-size: 14px;
+  user-select: none;
 }
 .base {
   margin: 0;
@@ -42,4 +43,5 @@ nav {
   width: 100%;
   height: 100%;
   border: solid 5px black;
+  user-select: none;
 }

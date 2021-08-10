@@ -12,7 +12,7 @@ let base = {
   hp: 1000,
   canAtt: false
 }
-let lingSpawnSpeed = 1500
+let lingSpawnSpeed = 2000
 
 // generates the game grid on load
 for (let i = 0; i < 18; i++) {

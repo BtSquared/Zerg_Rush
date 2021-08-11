@@ -1,5 +1,5 @@
 //audio values
-let volumeLvl = 0.0
+let volumeLvl = 0.1
 const zerglingDeath = new Audio('./sc/zerglingDeath.wav')
 const clickSound = new Audio('./sc/ghostSniper.wav')
 const zergVictory = new Audio('./sc/ZergVictory.mp3')
@@ -20,9 +20,9 @@ let base = {
   hp: 1500,
   canAtt: false
 }
-let lingSpawnSpeed = 2000
-let attackSpeed = 1000
-let moveSpeed = 1000
+let lingSpawnSpeed = 500
+let attackSpeed = 500
+let moveSpeed = 500
 
 // generates the game grid on load
 for (let i = 0; i < 18; i++) {
@@ -43,11 +43,11 @@ for (let i = 0; i < 18; i++) {
 }
 
 // populates the base tiles with data
-for (let i = 9; i <= 15; i++) {
-  for (let j = 11; j <= 20; j++) {
-    gameGrid[i].row[j].currentUnit.push(base)
-  }
-}
+// for (let i = 9; i <= 15; i++) {
+//   for (let j = 11; j <= 20; j++) {
+//     gameGrid[i].row[j].currentUnit.push(base)
+//   }
+// }
 
 // Classes
 class Unit {
@@ -117,20 +117,20 @@ const lingSpawn = (row, column) => {
 }
 
 //top lane spawn
-setInterval(function () {
+const topSpawn = () => {
   lingSpawn(0, Math.floor(Math.random() * (20 - 12) + 12))
-}, lingSpawnSpeed)
+}
 //left lane spawn
-setInterval(function () {
+const leftSpawn = () => {
   lingSpawn(Math.floor(Math.random() * (15 - 10) + 10), 0)
-}, lingSpawnSpeed)
+}
 //right lane spawn
-setInterval(function () {
+const rightSpawn = () => {
   lingSpawn(Math.floor(Math.random() * (15 - 10) + 10), 31)
-}, lingSpawnSpeed)
+}
 
 //top lane movement
-setInterval(() => {
+const topMove = () => {
   for (let i = 7; i >= 0; i--) {
     for (let j = 19; j >= 12; j--) {
       const currentTile = document.getElementById(`${i} ${j}`)
@@ -147,9 +147,9 @@ setInterval(() => {
       }
     }
   }
-}, moveSpeed)
+}
 //left lane movement
-setInterval(() => {
+const leftMove = () => {
   for (let i = 15; i >= 10; i--) {
     for (let j = 9; j >= 0; j--) {
       const currentTile = document.getElementById(`${i} ${j}`)
@@ -166,9 +166,9 @@ setInterval(() => {
       }
     }
   }
-}, moveSpeed)
+}
 //right lane movement
-setInterval(() => {
+const rightMove = () => {
   for (let i = 15; i >= 10; i--) {
     for (let j = 22; j <= 31; j++) {
       const currentTile = document.getElementById(`${i} ${j}`)
@@ -185,23 +185,67 @@ setInterval(() => {
       }
     }
   }
-}, moveSpeed)
-//attack function
-setInterval(() => {
-  for (let i = 8; i <= 16; i++) {
-    for (let j = 10; j <= 21; j++) {
-      const selectedUnit = gameGrid[i].row[j].currentUnit
-      // console.log(selectedUnit)
+}
 
-      if (selectedUnit.length > 0 && selectedUnit[0].canAtt === true) {
-        base.hp -= selectedUnit[0].attDmg
-        if (base.hp === 1495) {
-          baseUnderAtt.play()
-        }
-        if (base.hp <= 0) {
-          zergVictory.play()
+const gameStart = function () {
+  attackInt = setInterval(() => {
+    //attack function
+    for (let i = 8; i <= 16; i++) {
+      for (let j = 10; j <= 21; j++) {
+        const selectedUnit = gameGrid[i].row[j].currentUnit
+        if (selectedUnit.length > 0 && selectedUnit[0].canAtt === true) {
+          base.hp -= selectedUnit[0].attDmg
+          if (base.hp === 1495) {
+            baseUnderAtt.play()
+          }
+          if (base.hp <= 0) {
+            zergVictory.play()
+            clearInterval(topSpawnInt)
+            clearInterval(leftSpawnInt)
+            clearInterval(rightSpawnInt)
+            clearInterval(topMoveInt)
+            clearInterval(leftMoveInt)
+            clearInterval(rightMoveInt)
+            clearInterval(attackInt)
+            for (let i = 0; i < 18; i++) {
+              for (let j = 0; j < 32; j++) {
+                const currentTile = document.getElementById(`${i} ${j}`)
+                currentTile.removeEventListener('click', takeDmg)
+              }
+            }
+          }
         }
       }
     }
+  }, attackSpeed)
+  base.hp = 1500
+  for (let i = 0; i < 18; i++) {
+    for (let j = 0; j < 32; j++) {
+      const currentTile = document.getElementById(`${i} ${j}`)
+      const selectedUnit = gameGrid[i].row[j].currentUnit
+      console.log(selectedUnit)
+      currentTile.style.backgroundImage = ``
+      selectedUnit.pop()
+    }
   }
-}, attackSpeed)
+  topSpawnInt = setInterval(() => {
+    topSpawn()
+  }, lingSpawnSpeed)
+  leftSpawnInt = setInterval(() => {
+    leftSpawn()
+  }, lingSpawnSpeed)
+  rightSpawnInt = setInterval(() => {
+    rightSpawn()
+  }, lingSpawnSpeed)
+  topMoveInt = setInterval(() => {
+    topMove()
+  }, moveSpeed)
+  leftMoveInt = setInterval(() => {
+    leftMove()
+  }, moveSpeed)
+  rightMoveInt = setInterval(() => {
+    rightMove()
+  }, moveSpeed)
+}
+const resetButton = document.querySelector('button')
+resetButton.addEventListener('click', gameStart)

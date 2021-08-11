@@ -1,27 +1,32 @@
 html {
   margin: 0;
 }
+
 body {
   display: grid;
   grid-template-areas: 1fr 1280px 1fr/ 1fr 720px 1fr;
   justify-content: center;
   align-items: center;
 }
+
 nav {
   grid-area: 1/2/2/3;
   display: flex;
   justify-content: space-between;
   background-color: hsl(0, 0%, 29%);
 }
+
 .gameContainer {
   grid-area: 2/2/3/3;
   width: 1280px;
   height: 720px;
   border: solid 3px black;
 }
+
 .top {
   margin: 25px 50px 25px 50px;
 }
+
 .gameGrid {
   display: grid;
   grid-template-areas: repeat(32, 1fr)/ repeat(18, 1fr);
@@ -29,6 +34,7 @@ nav {
   background-size: cover;
   background-position: center;
 }
+
 .tileCon {
   display: grid;
   text-align: center;
@@ -37,6 +43,7 @@ nav {
   font-size: 14px;
   user-select: none;
 }
+
 .base {
   margin: 0;
   z-index: 1;
@@ -47,6 +54,7 @@ nav {
   height: 100%;
   user-select: none;
 }
+
 .winScreen {
   margin: 0;
   z-index: -1;
@@ -63,12 +71,15 @@ nav {
   text-align: center;
   font-size: 70px;
 }
+
 .winScreenTop {
   padding: 140px 0 0 0;
 }
+
 .endScoreText{
   padding: 20px 0 30px 0;
 }
+
 .startScreen {
   margin: 0;
   z-index: 2;
@@ -84,6 +95,7 @@ nav {
   font-size: 70px;
   padding: 25px 0 0 0;
 }
+
 .baseHp {
   background-color: lawngreen;
   height: 10px;

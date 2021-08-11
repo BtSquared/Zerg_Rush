@@ -16,7 +16,7 @@ this is a Javascript base defence game in which you cick the enemys to stall you
  - HTML
 
 ***Getting Started***
-
+just click the button
 
 ***Screenshots***
 

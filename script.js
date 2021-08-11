@@ -32,9 +32,9 @@ let base = {
   canAtt: false
 }
 // setInterval vars
-let lingSpawnSpeed = 100
-let attackSpeed = 100
-let moveSpeed = 100
+let lingSpawnSpeed = 2500
+let attackSpeed = 1000
+let moveSpeed = 1000
 
 // generates the game grid on load
 for (let i = 0; i < 18; i++) {
@@ -106,7 +106,7 @@ const takeDmg = (event) => {
     event.target.style.backgroundImage = ``
     event.target.removeEventListener('click', takeDmg)
     selectedUnit.pop()
-    event.target.removeChild(lastElementChild)
+    event.target.removeChild(event.target.lastElementChild)
   }
 }
 //zerg spawn function
@@ -157,8 +157,8 @@ const topMove = () => {
       const nextArray = gameGrid[i + 1].row[j].currentUnit
       if (nextArray.length === 0 && selectedUnit.length > 0) {
         const hpBar = currentTile.lastElementChild
-        nextArray.push(selectedUnit[0])
         nextTile.appendChild(hpBar)
+        nextArray.push(selectedUnit[0])
         currentTile.style.backgroundImage = ``
         nextTile.style.backgroundImage = `url('./sc/Zergling.png')`
         selectedUnit.pop()
@@ -177,6 +177,8 @@ const leftMove = () => {
       const selectedUnit = gameGrid[i].row[j].currentUnit
       const nextArray = gameGrid[i].row[j + 1].currentUnit
       if (nextArray.length === 0 && selectedUnit.length > 0) {
+        const hpBar = currentTile.lastElementChild
+        nextTile.appendChild(hpBar)
         nextArray.push(selectedUnit[0])
         currentTile.style.backgroundImage = ``
         nextTile.style.backgroundImage = `url('./sc/Zergling.png')`
@@ -196,6 +198,8 @@ const rightMove = () => {
       const selectedUnit = gameGrid[i].row[j].currentUnit
       const nextArray = gameGrid[i].row[j - 1].currentUnit
       if (nextArray.length === 0 && selectedUnit.length > 0) {
+        const hpBar = currentTile.lastElementChild
+        nextTile.appendChild(hpBar)
         nextArray.push(selectedUnit[0])
         currentTile.style.backgroundImage = ``
         nextTile.style.backgroundImage = `url('./sc/Zergling.png')`
@@ -301,15 +305,18 @@ const restartGame = () => {
       const currentTile = document.getElementById(`${i} ${j}`)
       const selectedUnit = gameGrid[i].row[j].currentUnit
       currentTile.style.backgroundImage = ``
+      if (selectedUnit.length > 0) {
+        currentTile.removeChild(currentTile.lastElementChild)
+      }
       selectedUnit.pop()
-      console.log(currentTile.children)
-      currentTile.removeChild(currentTile.lastElementChild)
     }
   }
   zergVictory.pause()
   zergVictory.currentTime = 0
   startGame()
   winScreen.style.zIndex = -1
+  score = 0
+  scoreHTML.innerText = score
 }
 //first game start on page load
 const firstStart = () => {

@@ -12,6 +12,9 @@ baseUnderAtt.volume = volumeLvl
 // Global vals
 const tileCon = document.querySelector('.tileCon')
 const scoreHTML = document.querySelector('.score')
+const resetButton = document.querySelector('.restartButton')
+const winScreen = document.querySelector('.winScreen')
+const startScreen = document.querySelector('.startScreen')
 let gameGrid = []
 let clickDmg = 25
 let score = 0
@@ -20,9 +23,9 @@ let base = {
   hp: 1500,
   canAtt: false
 }
-let lingSpawnSpeed = 500
-let attackSpeed = 500
-let moveSpeed = 500
+let lingSpawnSpeed = 100
+let attackSpeed = 100
+let moveSpeed = 100
 
 // generates the game grid on load
 for (let i = 0; i < 18; i++) {
@@ -41,13 +44,6 @@ for (let i = 0; i < 18; i++) {
     tileCon.append(tile)
   }
 }
-
-// populates the base tiles with data
-// for (let i = 9; i <= 15; i++) {
-//   for (let j = 11; j <= 20; j++) {
-//     gameGrid[i].row[j].currentUnit.push(base)
-//   }
-// }
 
 // Classes
 class Unit {
@@ -186,48 +182,32 @@ const rightMove = () => {
     }
   }
 }
-
-const gameStart = function () {
-  attackInt = setInterval(() => {
-    //attack function
-    for (let i = 8; i <= 16; i++) {
-      for (let j = 10; j <= 21; j++) {
-        const selectedUnit = gameGrid[i].row[j].currentUnit
-        if (selectedUnit.length > 0 && selectedUnit[0].canAtt === true) {
-          base.hp -= selectedUnit[0].attDmg
-          if (base.hp === 1495) {
-            baseUnderAtt.play()
-          }
-          if (base.hp <= 0) {
-            zergVictory.play()
-            clearInterval(topSpawnInt)
-            clearInterval(leftSpawnInt)
-            clearInterval(rightSpawnInt)
-            clearInterval(topMoveInt)
-            clearInterval(leftMoveInt)
-            clearInterval(rightMoveInt)
-            clearInterval(attackInt)
-            for (let i = 0; i < 18; i++) {
-              for (let j = 0; j < 32; j++) {
-                const currentTile = document.getElementById(`${i} ${j}`)
-                currentTile.removeEventListener('click', takeDmg)
-              }
+//attack function
+const attackFunc = () => {
+  for (let i = 8; i <= 16; i++) {
+    for (let j = 10; j <= 21; j++) {
+      const selectedUnit = gameGrid[i].row[j].currentUnit
+      if (selectedUnit.length > 0 && selectedUnit[0].canAtt === true) {
+        base.hp -= selectedUnit[0].attDmg
+        if (base.hp === 1495) {
+          baseUnderAtt.play()
+        }
+        if (base.hp <= 0) {
+          zergVictory.play()
+          stopGame()
+          winScreen.style.zIndex = 2
+          for (let i = 0; i < 18; i++) {
+            for (let j = 0; j < 32; j++) {
+              const currentTile = document.getElementById(`${i} ${j}`)
+              currentTile.removeEventListener('click', takeDmg)
             }
           }
         }
       }
     }
-  }, attackSpeed)
-  base.hp = 1500
-  for (let i = 0; i < 18; i++) {
-    for (let j = 0; j < 32; j++) {
-      const currentTile = document.getElementById(`${i} ${j}`)
-      const selectedUnit = gameGrid[i].row[j].currentUnit
-      console.log(selectedUnit)
-      currentTile.style.backgroundImage = ``
-      selectedUnit.pop()
-    }
   }
+}
+const startGame = () => {
   topSpawnInt = setInterval(() => {
     topSpawn()
   }, lingSpawnSpeed)
@@ -246,6 +226,40 @@ const gameStart = function () {
   rightMoveInt = setInterval(() => {
     rightMove()
   }, moveSpeed)
+  attackInt = setInterval(() => {
+    attackFunc()
+  }, attackSpeed)
 }
-const resetButton = document.querySelector('button')
-resetButton.addEventListener('click', gameStart)
+const stopGame = () => {
+  clearInterval(topSpawnInt)
+  clearInterval(leftSpawnInt)
+  clearInterval(rightSpawnInt)
+  clearInterval(topMoveInt)
+  clearInterval(leftMoveInt)
+  clearInterval(rightMoveInt)
+  clearInterval(attackInt)
+}
+//reset base hp and clears grid and array
+const restartGame = () => {
+  base.hp = 1500
+  for (let i = 0; i < 18; i++) {
+    for (let j = 0; j < 32; j++) {
+      const currentTile = document.getElementById(`${i} ${j}`)
+      const selectedUnit = gameGrid[i].row[j].currentUnit
+      currentTile.style.backgroundImage = ``
+      selectedUnit.pop()
+    }
+  }
+  zergVictory.pause()
+  zergVictory.currentTime = 0
+  startGame()
+  winScreen.style.zIndex = -1
+}
+//first game start on page load
+const firstStart = () => {
+  startGame()
+  startScreen.style.zIndex = -1
+}
+
+resetButton.addEventListener('click', restartGame)
+startScreen.addEventListener('click', firstStart)

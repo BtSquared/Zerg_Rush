@@ -47,3 +47,33 @@ nav {
   height: 100%;
   user-select: none;
 }
+.winScreen {
+  margin: 0;
+  z-index: -1;
+  grid-area: 4/1/16/33;
+  opacity: 0.8;
+  height: 100%;
+  width: 100%;
+  background-color: black;
+  color: white;
+  text-align: center;
+  font-size: 70px;
+}
+.winScreenTop {
+  padding: 70px 0 0 0;
+}
+.startScreen {
+  margin: 0;
+  z-index: 2;
+  grid-area: 8/11/11/22;
+  justify-self: center;
+  align-self: center;
+  opacity: 0.8;
+  height: 100%;
+  width: 100%;
+  background-color: black;
+  color: white;
+  text-align: center;
+  font-size: 70px;
+  padding: 25px 0 0 0;
+}

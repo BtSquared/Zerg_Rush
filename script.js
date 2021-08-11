@@ -1,5 +1,5 @@
 //audio values
-let volumeLvl = 0.1
+let volumeLvl = 0.0
 const zerglingDeath = new Audio('./sc/zerglingDeath.wav')
 const clickSound = new Audio('./sc/ghostSniper.wav')
 const zergVictory = new Audio('./sc/ZergVictory.mp3')

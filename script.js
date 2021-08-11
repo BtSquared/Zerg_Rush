@@ -1,13 +1,19 @@
 //audio values
-let volumeLvl = 0.0
+let volumeLvl = 0.15
 const zerglingDeath = new Audio('./sc/zerglingDeath.wav')
 const clickSound = new Audio('./sc/ghostSniper.wav')
 const zergVictory = new Audio('./sc/ZergVictory.mp3')
 const baseUnderAtt = new Audio('./sc/baseUnderAtt.wav')
+const lingHit1 = new Audio('./sc/zergHit1.wav')
+const lingHit2 = new Audio('./sc/zergHit2.wav')
+const lingHit3 = new Audio('./sc/zergHit3.wav')
 zerglingDeath.volume = volumeLvl
 clickSound.volume = volumeLvl
 zergVictory.volume = volumeLvl
 baseUnderAtt.volume = volumeLvl
+lingHit1.volume = volumeLvl
+lingHit2.volume = volumeLvl
+lingHit3.volume = volumeLvl
 
 // Global vals
 const tileCon = document.querySelector('.tileCon')
@@ -15,6 +21,7 @@ const scoreHTML = document.querySelector('.score')
 const resetButton = document.querySelector('.restartButton')
 const winScreen = document.querySelector('.winScreen')
 const startScreen = document.querySelector('.startScreen')
+const baseHp = document.querySelector('.baseHp')
 let gameGrid = []
 let clickDmg = 25
 let score = 0
@@ -23,9 +30,9 @@ let base = {
   hp: 1500,
   canAtt: false
 }
-let lingSpawnSpeed = 100
-let attackSpeed = 100
-let moveSpeed = 100
+let lingSpawnSpeed = 1000
+let attackSpeed = 1000
+let moveSpeed = 1000
 
 // generates the game grid on load
 for (let i = 0; i < 18; i++) {
@@ -82,7 +89,7 @@ const takeDmg = (event) => {
   const selectedUnit = gameGrid[row].row[column].currentUnit
   clickSound.play()
   selectedUnit[0].hp -= clickDmg
-  console.log(selectedUnit[0].hp)
+
   if (selectedUnit[0].hp <= 0) {
     zerglingDeath.play()
     score += selectedUnit[0].points
@@ -188,25 +195,54 @@ const attackFunc = () => {
     for (let j = 10; j <= 21; j++) {
       const selectedUnit = gameGrid[i].row[j].currentUnit
       if (selectedUnit.length > 0 && selectedUnit[0].canAtt === true) {
-        base.hp -= selectedUnit[0].attDmg
-        if (base.hp === 1495) {
-          baseUnderAtt.play()
+        let hitAudio = Math.floor(Math.random() * 3)
+        switch (hitAudio) {
+          case 0:
+            setTimeout(() => {
+              lingHit1.play()
+            }, Math.random() * 500)
+            break
+          case 1:
+            setTimeout(() => {
+              lingHit2.play()
+            }, Math.random() * 500)
+            break
+          case 2:
+            setTimeout(() => {
+              lingHit3.play()
+            }, Math.random() * 500)
+            break
+          default:
+            console.log('switch error')
         }
-        if (base.hp <= 0) {
-          zergVictory.play()
-          stopGame()
-          winScreen.style.zIndex = 2
-          for (let i = 0; i < 18; i++) {
-            for (let j = 0; j < 32; j++) {
-              const currentTile = document.getElementById(`${i} ${j}`)
-              currentTile.removeEventListener('click', takeDmg)
-            }
+        base.hp -= selectedUnit[0].attDmg
+        baseHp.style.width = 0.066 * base.hp + '%'
+        if (base.hp < 1000) {
+          baseHp.style.backgroundColor = 'yellow'
+          if (base.hp < 500) {
+            baseHp.style.backgroundColor = 'red'
+          }
+        }
+      }
+      if (base.hp === 1495) {
+        baseUnderAtt.play()
+      }
+      if (base.hp <= 0) {
+        zergVictory.play()
+        stopGame()
+        winScreen.style.zIndex = 2
+        baseHp.style.backgroundColor = 'lawngreen'
+        for (let i = 0; i < 18; i++) {
+          for (let j = 0; j < 32; j++) {
+            const currentTile = document.getElementById(`${i} ${j}`)
+            currentTile.removeEventListener('click', takeDmg)
           }
         }
       }
     }
   }
 }
+
 const startGame = () => {
   topSpawnInt = setInterval(() => {
     topSpawn()

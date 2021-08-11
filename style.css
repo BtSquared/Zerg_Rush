@@ -57,7 +57,7 @@ nav {
   background-color: black;
   background-image: url('./sc/zergVictoryScreen.jpeg');
   background-repeat: no-repeat;
-  background-size: 50%;
+  background-size: 60%;
   background-position: center;
   color: white;
   text-align: center;
@@ -69,7 +69,7 @@ nav {
 .startScreen {
   margin: 0;
   z-index: 2;
-  grid-area: 8/11/11/22;
+  grid-area: 4/12/7/22;
   justify-self: center;
   align-self: center;
   opacity: 0.8;
@@ -80,4 +80,9 @@ nav {
   text-align: center;
   font-size: 70px;
   padding: 25px 0 0 0;
+}
+.baseHp {
+  background-color: lawngreen;
+  height: 10px;
+  width: 0%;
 }

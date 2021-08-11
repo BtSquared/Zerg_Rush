@@ -25,5 +25,9 @@ this is a Javascript base defence game in which you cick the enemys to stall you
 
 
 ***Credits***
-- Header Image property of Activison Blizzard
-- base [image](https://starcraft.fandom.com/wiki/Command_center)
+- assets that are property of Activison Blizzard
+  - header image
+  - base sprite
+  - zergling sprite
+  - all audio files
+  - game background made with starcraft map editor

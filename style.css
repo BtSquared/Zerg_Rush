@@ -64,7 +64,10 @@ nav {
   font-size: 70px;
 }
 .winScreenTop {
-  padding: 70px 0 0 0;
+  padding: 140px 0 0 0;
+}
+.endScoreText{
+  padding: 20px 0 30px 0;
 }
 .startScreen {
   margin: 0;

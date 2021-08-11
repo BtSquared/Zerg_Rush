@@ -18,6 +18,7 @@ lingHit3.volume = volumeLvl
 // Global vals
 const tileCon = document.querySelector('.tileCon')
 const scoreHTML = document.querySelector('.score')
+const endScore = document.querySelector('.endScreenScore')
 const resetButton = document.querySelector('.restartButton')
 const winScreen = document.querySelector('.winScreen')
 const startScreen = document.querySelector('.startScreen')
@@ -30,9 +31,10 @@ let base = {
   hp: 1500,
   canAtt: false
 }
-let lingSpawnSpeed = 1000
-let attackSpeed = 1000
-let moveSpeed = 1000
+// setInterval vars
+let lingSpawnSpeed = 100
+let attackSpeed = 100
+let moveSpeed = 100
 
 // generates the game grid on load
 for (let i = 0; i < 18; i++) {
@@ -87,9 +89,16 @@ const takeDmg = (event) => {
   const row = parseInt(gridId[0])
   const column = parseInt(gridId[1])
   const selectedUnit = gameGrid[row].row[column].currentUnit
+  const hpBar = event.target.lastElementChild
   clickSound.play()
   selectedUnit[0].hp -= clickDmg
-
+  hpBar.style.width = selectedUnit[0].hp + '%'
+  if (selectedUnit[0].hp < 60) {
+    hpBar.style.backgroundColor = 'yellow'
+    if (selectedUnit[0].hp < 30) {
+      hpBar.style.backgroundColor = 'red'
+    }
+  }
   if (selectedUnit[0].hp <= 0) {
     zerglingDeath.play()
     score += selectedUnit[0].points
@@ -97,6 +106,7 @@ const takeDmg = (event) => {
     event.target.style.backgroundImage = ``
     event.target.removeEventListener('click', takeDmg)
     selectedUnit.pop()
+    event.target.removeChild(lastElementChild)
   }
 }
 //zerg spawn function
@@ -113,7 +123,12 @@ const lingSpawn = (row, column) => {
     'down'
   )
   if (gameGrid[row].row[column].currentUnit.length === 0) {
+    let hpBar = document.createElement('div')
     gameGrid[row].row[column].currentUnit.push(freshSpawn)
+    hpBar.style.height = '5px'
+    hpBar.style.width = '0%'
+    hpBar.style.backgroundColor = 'lawngreen'
+    spawnTile.appendChild(hpBar)
   }
   spawnTile.style.backgroundImage = `url('./sc/Zergling.png')`
   spawnTile.addEventListener('click', takeDmg)
@@ -141,7 +156,9 @@ const topMove = () => {
       const selectedUnit = gameGrid[i].row[j].currentUnit
       const nextArray = gameGrid[i + 1].row[j].currentUnit
       if (nextArray.length === 0 && selectedUnit.length > 0) {
+        const hpBar = currentTile.lastElementChild
         nextArray.push(selectedUnit[0])
+        nextTile.appendChild(hpBar)
         currentTile.style.backgroundImage = ``
         nextTile.style.backgroundImage = `url('./sc/Zergling.png')`
         selectedUnit.pop()
@@ -230,6 +247,7 @@ const attackFunc = () => {
       if (base.hp <= 0) {
         zergVictory.play()
         stopGame()
+        endScore.innerText = score
         winScreen.style.zIndex = 2
         baseHp.style.backgroundColor = 'lawngreen'
         for (let i = 0; i < 18; i++) {
@@ -284,6 +302,8 @@ const restartGame = () => {
       const selectedUnit = gameGrid[i].row[j].currentUnit
       currentTile.style.backgroundImage = ``
       selectedUnit.pop()
+      console.log(currentTile.children)
+      currentTile.removeChild(currentTile.lastElementChild)
     }
   }
   zergVictory.pause()

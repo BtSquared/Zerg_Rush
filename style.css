@@ -16,6 +16,13 @@ nav {
   background-color: hsl(0, 0%, 29%);
 }
 
+footer {
+  grid-area: 3/2/4/2;
+  display: flex;
+  justify-content: space-between;
+  background-color: hsl(0, 0%, 29%);
+}
+
 .gameContainer {
   grid-area: 2/2/3/3;
   width: 1280px;
@@ -26,6 +33,9 @@ nav {
 .top {
   margin: 25px 50px 25px 50px;
 }
+.bottom {
+  margin: 10px 50px 10px 50px;
+}
 
 .gameGrid {
   display: grid;
@@ -33,6 +43,7 @@ nav {
   background-image: url('./sc/mainbg.PNG');
   background-size: cover;
   background-position: center;
+  position: relative;
 }
 
 .tileCon {
@@ -100,4 +111,11 @@ nav {
   background-color: lawngreen;
   height: 10px;
   width: 0%;
+}
+
+#creditsPage {
+  background-color: rgb(150, 150, 150);
+  border: solid 2px black;
+  user-select: none;
+  padding: 10px;
 }

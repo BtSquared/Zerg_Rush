@@ -8,7 +8,7 @@
 
 ***Description***
 
-this is a Javascript base defence game in which you cick the enemys to stall your inevitable demise. How long can you hold off the swarm?
+this is a grid based defence game build only using HTML, CSS, and Javascript. the goal of the game is to hold out for as long as possible agianst the swarm. how many can you take down before succumb to the shear numbers of the hive mind.
 
 ***Technologies Used***
  - Javascript
@@ -16,18 +16,27 @@ this is a Javascript base defence game in which you cick the enemys to stall you
  - HTML
 
 ***Getting Started***
-just click the button
+
+open the index.html click the start button and start clicking those Zerglings 
 
 ***Screenshots***
-
+![ss1](on%20load.png)
+![ss2](Screen%20Shot%20in%20game.png)
+![ss3](End%20game%20screen.png)
 
 ***future updates***
-
+- adding more units
+- add resource system with upgrades for player
+- adding animated sprites
+- adding difficulty scaling over time 
 
 ***Credits***
+
+i did not make nor do i own these assets
 - assets that are property of Activison Blizzard
   - header image
   - base sprite
   - zergling sprite
   - all audio files
   - game background made with starcraft map editor
+  - end game background image

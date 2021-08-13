@@ -1,4 +1,20 @@
 body {
-  background-color: hsl(0, 0%, 30%);
-  color: hsl(0, 0%, 94%);
+  background-color: hsl(0, 0%, 95%);
+  color: rgb(24, 24, 24);
+}
+
+h3 {
+width: 140px;
+}
+
+.container {
+  display: flex;
+}
+
+.creds {
+  margin: 20px;
+  background-color: rgb(175, 175, 175);
+  color: rgb(24, 24, 24);
+  border-radius: 10px;
+  padding: 20px;
 }
